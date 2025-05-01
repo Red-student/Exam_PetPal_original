@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/petImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_pet" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_overlay" />
+
+            <TextView
+                android:id="@+id/petName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="16dp"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:shadowColor="#80000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <TextView
+                    android:id="@+id/petInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="@color/text_secondary" />
+
+                <TextView
+                    android:id="@+id/petAge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBody1"
+                    android:textColor="@color/accent_primary"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/vaccinationChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Вакцинация"
+                    android:textSize="12sp"
+                    app:chipBackgroundColor="@color/chip_background"
+                    app:chipStrokeWidth="0dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/medicationChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Лекарства"
+                    android:textSize="12sp"
+                    app:chipBackgroundColor="@color/chip_background"
+                    app:chipStrokeWidth="0dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/eventsChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="События"
+                    android:textSize="12sp"
+                    app:chipBackgroundColor="@color/chip_background"
+                    app:chipStrokeWidth="0dp" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView> 

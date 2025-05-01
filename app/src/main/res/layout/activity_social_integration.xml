@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Войти через социальные сети"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/whatsapp_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Войти через WhatsApp"
+            android:drawableStart="@drawable/ic_whatsapp"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#25D366"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/google_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Войти через Google"
+            android:drawableStart="@drawable/ic_google"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#DB4437"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/vk_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Войти через VK"
+            android:drawableStart="@drawable/ic_vk"
+            android:drawablePadding="8dp"
+            android:backgroundTint="#4C75A3"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+</FrameLayout> 

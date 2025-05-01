@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/accent_tertiary"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Редактирование питомца"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="@color/text_primary"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/petImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_pet"
+                app:shapeAppearanceOverlay="@style/CircleImageView"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/changePhotoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="Изменить фото"
+                app:icon="@drawable/ic_camera"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:hint="Кличка"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Вид"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/typeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Порода"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/breedInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Дата рождения"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birthDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Вес (кг)"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/weightInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Примечания"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/notesInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:gravity="top"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/savePetBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Сохранить"
+                app:icon="@drawable/ic_save"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Отмена"
+                app:icon="@drawable/ic_close"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deletePetBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Удалить питомца"
+                app:icon="@drawable/ic_delete"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:textColor="@color/error"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout> 

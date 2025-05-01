@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/petInfoFragment">
+
+    <fragment
+        android:id="@+id/petInfoFragment"
+        android:name="com.example.exam_petpal.PetInfoFragment"
+        android:label="Информация о питомце">
+        <action
+            android:id="@+id/action_petInfo_to_petEvents"
+            app:destination="@id/petEventsFragment" />
+        <action
+            android:id="@+id/action_petInfo_to_petVaccines"
+            app:destination="@id/petVaccinesFragment" />
+        <action
+            android:id="@+id/action_petInfo_to_petHistory"
+            app:destination="@id/petHistoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/petEventsFragment"
+        android:name="com.example.exam_petpal.PetEventsFragment"
+        android:label="События питомца">
+        <action
+            android:id="@+id/action_petEvents_to_petInfo"
+            app:destination="@id/petInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/petVaccinesFragment"
+        android:name="com.example.exam_petpal.PetVaccinesFragment"
+        android:label="Вакцины питомца">
+        <action
+            android:id="@+id/action_petVaccines_to_petInfo"
+            app:destination="@id/petInfoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/petHistoryFragment"
+        android:name="com.example.exam_petpal.PetHistoryFragment"
+        android:label="История питомца">
+        <action
+            android:id="@+id/action_petHistory_to_petInfo"
+            app:destination="@id/petInfoFragment" />
+    </fragment>
+
+</navigation> 

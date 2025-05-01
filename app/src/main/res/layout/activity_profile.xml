@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:strokeColor="@color/accent_tertiary"
+                app:strokeWidth="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/default_avatar"
+                        app:shapeAppearanceOverlay="@style/CircleImageView"/>
+
+                    <TextView
+                        android:id="@+id/userNameText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"/>
+
+                    <TextView
+                        android:id="@+id/userEmailText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_secondary"/>
+
+                    <TextView
+                        android:id="@+id/profileInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Войти"
+                        android:visibility="gone"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/registerButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Зарегистрироваться"
+                        android:visibility="gone"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/editProfileButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="Редактировать профиль"
+                        app:icon="@drawable/ic_edit"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/changePasswordBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Изменить пароль"
+                        app:icon="@drawable/ic_lock"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/premiumButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/premium"
+                app:icon="@drawable/ic_premium"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/backupButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/backup"
+                app:icon="@drawable/ic_backup"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/restoreButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/restore"
+                app:icon="@drawable/ic_restore"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/feedbackButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/feedback"
+                app:icon="@drawable/ic_feedback"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/faqButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Справка / FAQ"
+                app:icon="@drawable/ic_info"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"/>
+
+            <TextView
+                android:id="@+id/aboutText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/about" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                app:icon="@drawable/ic_logout"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout> 

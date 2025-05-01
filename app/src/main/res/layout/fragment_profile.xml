@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profileImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImageView"/>
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/profileImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/emailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/nameText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editProfileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Редактировать профиль"
+            app:layout_constraintTop_toBottomOf="@id/emailText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Выйти"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:layout_constraintTop_toBottomOf="@id/editProfileButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView> 

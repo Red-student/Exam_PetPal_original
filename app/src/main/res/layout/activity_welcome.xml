@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/welcomeImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/welcome_illustration"
+        android:scaleType="fitCenter"
+        android:contentDescription="Иллюстрация с питомцами"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Добро пожаловать в PetPal!"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:textColor="@color/text_primary"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Начните заботиться о питомце — без регистрации."
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Войти"
+        android:textSize="16sp"
+        android:padding="12dp"
+        app:cornerRadius="8dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/registerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Регистрация"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        app:cornerRadius="8dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/trialButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Создать пробного питомца"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginTop="8dp"
+        app:cornerRadius="8dp"
+        app:backgroundTint="@color/accent_tertiary"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Пробный питомец сохраняется только на этом устройстве. Чтобы не потерять данные — зарегистрируйтесь позже!"
+        android:textSize="12sp"
+        android:textColor="@color/text_secondary"
+        android:gravity="center"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout> 

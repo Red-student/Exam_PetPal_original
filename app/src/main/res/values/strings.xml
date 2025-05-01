@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Exam_PetPal</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="edit_note">Редактировать заметку</string>
+    <string name="delete_note">Удалить заметку</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    
+    <!-- Privacy Policy -->
+    <string name="privacy_policy_title">Политика конфиденциальности</string>
+    <string name="privacy_policy_content">PetPal уважает вашу конфиденциальность и стремится защитить ваши личные данные. Настоящая политика конфиденциальности объясняет, как мы собираем, используем и защищаем информацию, которую вы предоставляете при использовании нашего приложения.\n\n1. Сбор информации\nМы собираем только ту информацию, которая необходима для предоставления наших услуг:\n- Информация о ваших питомцах\n- Данные о вакцинации и медицинских процедурах\n- Информация о событиях и напоминаниях\n\n2. Использование информации\nМы используем собранную информацию для:\n- Предоставления услуг по уходу за питомцами\n- Отправки уведомлений о важных событиях\n- Улучшения работы приложения\n\n3. Защита информации\nМы принимаем все необходимые меры для защиты ваших данных:\n- Шифрование данных\n- Регулярное резервное копирование\n- Ограниченный доступ к информации\n\n4. Ваши права\nВы имеете право:\n- Получить доступ к своим данным\n- Изменить или удалить свои данные\n- Отозвать согласие на обработку данных\n\n5. Контакты\nЕсли у вас есть вопросы о нашей политике конфиденциальности, свяжитесь с нами:\nEmail: support@petpal.com</string>
+    <string name="pet_photo">Фото питомца</string>
+    <string name="edit_pet">Редактировать питомца</string>
+    <string name="delete_pet">Удалить питомца</string>
+    <string name="quick_actions">Быстрые действия</string>
+    <string name="add_event">Добавить событие</string>
+    <string name="add_vaccination">Добавить вакцинацию</string>
+    <string name="add_medication">Добавить медикамент</string>
+    <string name="add_pet">Добавить питомца</string>
+    <string name="pet_name">Кличка</string>
+    <string name="pet_type">Вид</string>
+    <string name="pet_breed">Порода</string>
+    <string name="birth_date">Дата рождения</string>
+    <string name="weight">Вес (кг)</string>
+    <string name="gender">Пол</string>
+    <string name="fill_all_fields">Пожалуйста, заполните все поля</string>
+    <string name="pet_added">Питомец успешно добавлен</string>
+    <string name="invalid_date_format">Неверный формат даты. Используйте формат ДД.ММ.ГГГГ</string>
+    <string name="invalid_weight_format">Неверный формат веса. Используйте число с точкой</string>
+    
+    <!-- Auth -->
+    <string name="name">Имя</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="confirm_password">Подтвердите пароль</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="login">Войти</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="send_reset_link">Отправить ссылку для сброса</string>
+    <string name="register_prompt">Нет аккаунта? Зарегистрироваться</string>
+    <string name="login_prompt">Уже есть аккаунт? Войти</string>
+    
+    <!-- Profile -->
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="premium">Премиум</string>
+    <string name="backup">Резервное копирование</string>
+    <string name="restore">Восстановление</string>
+    <string name="feedback">Обратная связь</string>
+    <string name="about">О приложении</string>
+    <string name="logout">Выйти</string>
+</resources>

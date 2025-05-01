@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <ImageView
+        android:id="@+id/petPhoto"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_add_photo" />
+
+    <TextView
+        android:id="@+id/petName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Имя"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@id/petPhoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/petType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Тип"
+        app:layout_constraintTop_toBottomOf="@id/petName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/petBreed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Порода"
+        app:layout_constraintTop_toBottomOf="@id/petType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/petBirthDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Дата рождения"
+        app:layout_constraintTop_toBottomOf="@id/petBreed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/petWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Вес"
+        app:layout_constraintTop_toBottomOf="@id/petBirthDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/petGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Пол"
+        app:layout_constraintTop_toBottomOf="@id/petWeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/historyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="История вакцинаций и процедур"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/archiveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Скрыть (архивировать) питомца"
+        android:layout_marginTop="8dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout> 

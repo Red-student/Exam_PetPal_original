@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/accent_tertiary"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Медикаменты"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/text_primary"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Название лекарства"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/medicationNameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Дозировка"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dosageInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Частота приема"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/frequencyInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Дата начала"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/startDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Дата окончания"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/endDateInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveMedicationBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Сохранить"
+                android:layout_marginTop="16dp"
+                app:icon="@drawable/ic_save"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deleteMedicationBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Удалить медикамент"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:textColor="@color/error"
+        app:icon="@drawable/ic_delete"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:iconTint="@color/error"/>
+</LinearLayout> 

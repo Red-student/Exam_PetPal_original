@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/accent_tertiary"
+        app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Медикаменты"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="@color/text_primary"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Поиск"
+                app:startIconDrawable="@drawable/ic_search"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/filterChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/allChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Все"
+                    android:checked="true"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/activeChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Активные"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/completedChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Завершенные"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/overdueChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Просроченные"/>
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/medicationsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addMedicationFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        app:fabSize="normal"
+        app:tint="@color/white"/>
+
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="У вас пока нет медикаментов"
+        android:textSize="18sp"
+        android:textColor="@color/text_secondary"
+        android:visibility="gone"/>
+</LinearLayout> 
