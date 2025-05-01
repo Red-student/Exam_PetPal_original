@@ -120,7 +120,7 @@ public class PetVaccinesFragment extends Fragment {
         EditText descInput = dialogView.findViewById(R.id.vaccineDescInput);
         nameInput.setText(vaccine.getName());
         dateInput.setText(sdf.format(vaccine.getDate()));
-        expiryInput.setText(vaccine.getExpiryDate() != null ? sdf.format(vaccine.getExpiryDate()) : "");
+        expiryInput.setText(vaccine.getExpirationDate() != null ? sdf.format(vaccine.getExpirationDate()) : "");
         descInput.setText(vaccine.getDescription());
         Calendar calendar = Calendar.getInstance();
         dateInput.setOnClickListener(v -> showDatePicker(dateInput, calendar));
@@ -142,7 +142,7 @@ public class PetVaccinesFragment extends Fragment {
                     Date expiry = TextUtils.isEmpty(expiryStr) ? null : sdf.parse(expiryStr);
                     vaccine.setName(name);
                     vaccine.setDate(date);
-                    vaccine.setExpiryDate(expiry);
+                    vaccine.setExpirationDate(expiry);
                     vaccine.setDescription(desc);
                     updateVaccinesList();
                 } catch (Exception e) {

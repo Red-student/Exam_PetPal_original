@@ -138,6 +138,11 @@
             android:exported="false"
             android:theme="@style/Theme.PetPal" />
         <activity
+            android:name=".AddVaccineActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PetPal.NoActionBar"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".PetVaccinesActivity"
             android:exported="false"
             android:theme="@style/Theme.PetPal" />

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Pet implements Serializable {
     private String id;
@@ -15,19 +16,20 @@ public class Pet implements Serializable {
     private String gender;
     private String photoUri;
     private boolean isTrial;
-    private boolean hidden;
+    private boolean isHidden;
     private List<Vaccine> vaccines;
     private List<Event> events;
 
     public Pet() {
-        this.id = String.valueOf(System.currentTimeMillis());
-        this.hidden = false;
+        this.id = UUID.randomUUID().toString();
+        this.isTrial = false;
+        this.isHidden = false;
         this.vaccines = new ArrayList<>();
         this.events = new ArrayList<>();
     }
 
     public Pet(String name, String type, String breed, Date birthDate, double weight, String gender, String photoUri, boolean isTrial) {
-        this.id = String.valueOf(System.currentTimeMillis());
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.type = type;
         this.breed = breed;
@@ -36,7 +38,7 @@ public class Pet implements Serializable {
         this.gender = gender;
         this.photoUri = photoUri;
         this.isTrial = isTrial;
-        this.hidden = false;
+        this.isHidden = false;
         this.vaccines = new ArrayList<>();
         this.events = new ArrayList<>();
     }
@@ -115,11 +117,11 @@ public class Pet implements Serializable {
     }
 
     public boolean isHidden() {
-        return hidden;
+        return isHidden;
     }
 
     public void setHidden(boolean hidden) {
-        this.hidden = hidden;
+        isHidden = hidden;
     }
 
     public List<Vaccine> getVaccines() {

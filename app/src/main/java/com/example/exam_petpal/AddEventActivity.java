@@ -84,7 +84,7 @@ public class AddEventActivity extends AppCompatActivity {
             event.setTitle(title);
             event.setDate(eventDate);
             event.setDescription(description);
-            event.setType("custom");
+            event.setType(Event.EventType.OTHER);
             
             // Добавляем событие первому питомцу (в реальном приложении нужно добавить выбор питомца)
             if (!petManager.getPets().isEmpty()) {

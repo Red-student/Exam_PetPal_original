@@ -52,8 +52,8 @@ public class PetHistoryFragment extends Fragment {
             for (Vaccine v : vaccines) {
                 TextView tv = new TextView(getContext());
                 String text = v.getName() + "\nДата: " + sdf.format(v.getDate());
-                if (v.getExpiryDate() != null) {
-                    text += "\nДействует до: " + sdf.format(v.getExpiryDate());
+                if (v.getExpirationDate() != null) {
+                    text += "\nДействует до: " + sdf.format(v.getExpirationDate());
                 }
                 if (v.getDescription() != null && !v.getDescription().isEmpty()) {
                     text += "\n" + v.getDescription();

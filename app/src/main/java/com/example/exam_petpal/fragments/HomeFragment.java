@@ -6,97 +6,117 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.exam_petpal.AddPetActivity;
+import com.example.exam_petpal.AddVaccineActivity;
+import com.example.exam_petpal.PetDetailActivity;
 import com.example.exam_petpal.R;
 import com.example.exam_petpal.adapters.PetAdapter;
 import com.example.exam_petpal.data.PetManager;
 import com.example.exam_petpal.models.Pet;
-import com.example.exam_petpal.AuthManager;
-import com.example.exam_petpal.AddPetActivity;
-import com.example.exam_petpal.PetDetailActivity;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HomeFragment extends Fragment implements PetAdapter.OnPetClickListener {
     private RecyclerView petsRecyclerView;
     private PetAdapter petAdapter;
     private PetManager petManager;
-    private List<Pet> allPets;
+    private FloatingActionButton addPetFab;
+    private SwitchMaterial visibilitySwitch;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_pets, container, false);
         
-        // Инициализация менеджера питомцев
         petManager = PetManager.getInstance(requireContext());
+        
+        initializeViews(view);
+        setupRecyclerView();
+        setupListeners();
+        
+        return view;
+    }
 
-        // Инициализация RecyclerView
+    private void initializeViews(View view) {
         petsRecyclerView = view.findViewById(R.id.petsRecyclerView);
-        petsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        allPets = petManager.getPets();
-        petAdapter = new PetAdapter(allPets, this);
+        addPetFab = view.findViewById(R.id.addPetFab);
+        visibilitySwitch = view.findViewById(R.id.visibilitySwitch);
+    }
+
+    private void setupRecyclerView() {
+        petAdapter = new PetAdapter(requireContext(), petManager.getPets(), this);
+        petsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         petsRecyclerView.setAdapter(petAdapter);
+    }
 
-        // Инициализация FAB
-        ExtendedFloatingActionButton addPetFab = view.findViewById(R.id.addPetFab);
-        // Ограничение для незарегистрированного пользователя
-        if (!AuthManager.isLoggedIn(requireContext())) {
-            if (!petManager.canAddTrialPet()) {
-                addPetFab.setVisibility(View.GONE);
-            } else {
-                addPetFab.setVisibility(View.VISIBLE);
-            }
-        } else {
-            addPetFab.setVisibility(View.VISIBLE);
-        }
-
-        // Обработка нажатия на FAB
+    private void setupListeners() {
         addPetFab.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), AddPetActivity.class));
+            Intent intent = new Intent(requireContext(), AddPetActivity.class);
+            startActivity(intent);
         });
 
-        return view;
+        visibilitySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            petAdapter.setShowArchived(isChecked);
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updatePetsList();
+        petAdapter.updatePets(petManager.getPets());
     }
 
     @Override
     public void onPetClick(Pet pet) {
-        try {
-            Intent intent = new Intent(getActivity(), PetDetailActivity.class);
-            intent.putExtra("pet_id", pet.getId());
-            startActivity(intent);
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "Ошибка при открытии деталей питомца", Toast.LENGTH_SHORT).show();
-        }
+        Intent intent = new Intent(requireContext(), PetDetailActivity.class);
+        intent.putExtra("pet_id", pet.getId());
+        startActivity(intent);
     }
 
-    private void updatePetsList() {
-        List<Pet> pets = new ArrayList<>();
-        for (Pet pet : petManager.getPets()) {
-            if (!pet.isHidden()) {
-                pets.add(pet);
-            }
-        }
-        allPets = petManager.getPets();
-        petAdapter.setShowArchived(false);
-        petAdapter.updatePets(pets);
+    @Override
+    public void onEditClick(Pet pet) {
+        Intent intent = new Intent(requireContext(), AddPetActivity.class);
+        intent.putExtra("pet_id", pet.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClick(Pet pet) {
+        petManager.deletePet(pet.getId());
+        petAdapter.updatePets(petManager.getPets());
+        Toast.makeText(requireContext(), "Питомец удален", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAddVaccineClick(Pet pet) {
+        Intent intent = new Intent(requireContext(), AddVaccineActivity.class);
+        intent.putExtra("pet_id", pet.getId());
+        startActivity(intent);
     }
 
     public void filterPets(String query) {
-        List<Pet> filtered = new ArrayList<>();
-        for (Pet pet : allPets) {
-            if (!pet.isHidden() && pet.getName().toLowerCase().contains(query.toLowerCase())) {
-                filtered.add(pet);
-            }
+        if (query == null || query.isEmpty()) {
+            petAdapter.updatePets(petManager.getPets());
+            return;
         }
-        petAdapter.updatePets(filtered);
+
+        List<Pet> filteredPets = petManager.getPets().stream()
+            .filter(pet -> pet.getName().toLowerCase().contains(query.toLowerCase()) ||
+                         pet.getType().toLowerCase().contains(query.toLowerCase()) ||
+                         pet.getBreed().toLowerCase().contains(query.toLowerCase()))
+            .collect(Collectors.toList());
+
+        petAdapter.updatePets(filteredPets);
     }
 } 

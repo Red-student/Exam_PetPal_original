@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.exam_petpal.data.PetManager;
 import com.example.exam_petpal.models.Pet;
 
@@ -62,11 +63,17 @@ public class PetInfoFragment extends Fragment {
             birthDate.setText(sdf.format(pet.getBirthDate()));
             weight.setText(String.valueOf(pet.getWeight()));
             gender.setText(pet.getGender());
+
             if (pet.getPhotoUri() != null) {
-                photo.setImageURI(android.net.Uri.parse(pet.getPhotoUri()));
+                Glide.with(this)
+                    .load(pet.getPhotoUri())
+                    .placeholder(R.drawable.default_pet)
+                    .error(R.drawable.default_pet)
+                    .into(photo);
             } else {
-                photo.setImageResource(R.drawable.ic_add_photo);
+                photo.setImageResource(R.drawable.default_pet);
             }
+
             if (AuthManager.isLoggedIn(requireContext())) {
                 photo.setOnClickListener(v -> {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -99,7 +106,11 @@ public class PetInfoFragment extends Fragment {
         if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK && data != null && pet != null) {
             Uri selectedPhotoUri = data.getData();
             if (selectedPhotoUri != null) {
-                photo.setImageURI(selectedPhotoUri);
+                Glide.with(this)
+                    .load(selectedPhotoUri)
+                    .placeholder(R.drawable.default_pet)
+                    .error(R.drawable.default_pet)
+                    .into(photo);
                 // Сохраняем фото через PetManager
                 String photoPath = PetManager.getInstance(requireContext()).savePetPhoto(requireContext(), selectedPhotoUri);
                 pet.setPhotoUri(photoPath);

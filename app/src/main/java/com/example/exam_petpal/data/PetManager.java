@@ -8,16 +8,19 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.exam_petpal.models.Pet;
+import com.example.exam_petpal.models.Vaccine;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PetManager {
     private static final String PREF_NAME = "pet_data";
@@ -58,11 +61,22 @@ public class PetManager {
     }
 
     public List<Pet> getPets() {
-        return new ArrayList<>(pets);
+        return new ArrayList<>(pets.stream()
+            .filter(pet -> !pet.isHidden())
+            .collect(Collectors.toList()));
     }
 
     public List<Pet> getAllPets() {
         return new ArrayList<>(pets);
+    }
+
+    public Pet getPetById(String petId) {
+        for (Pet pet : pets) {
+            if (pet.getId().equals(petId)) {
+                return pet;
+            }
+        }
+        return null;
     }
 
     public void addPet(Pet pet) {
@@ -85,6 +99,26 @@ public class PetManager {
         savePets();
     }
 
+    public void hidePet(String petId) {
+        for (Pet pet : pets) {
+            if (pet.getId().equals(petId)) {
+                pet.setHidden(true);
+                savePets();
+                break;
+            }
+        }
+    }
+
+    public void unhidePet(String petId) {
+        for (Pet pet : pets) {
+            if (pet.getId().equals(petId)) {
+                pet.setHidden(false);
+                savePets();
+                break;
+            }
+        }
+    }
+
     public void clearAllPets() {
         pets.clear();
         savePets();
@@ -103,19 +137,35 @@ public class PetManager {
 
     public String savePetPhoto(Context context, Uri photoUri) {
         try {
-            Bitmap bitmap = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(photoUri));
-            String fileName = "pet_photo_" + System.currentTimeMillis() + ".jpg";
-            File file = new File(context.getFilesDir(), fileName);
-            
-            FileOutputStream fos = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-            fos.close();
-            
-            return file.getAbsolutePath();
+            // Создаем директорию для фото, если она не существует
+            File photosDir = new File(context.getFilesDir(), "pet_photos");
+            if (!photosDir.exists()) {
+                photosDir.mkdirs();
+            }
+
+            // Создаем уникальное имя файла
+            String fileName = "pet_" + System.currentTimeMillis() + ".jpg";
+            File photoFile = new File(photosDir, fileName);
+
+            // Копируем фото из Uri в файл
+            InputStream inputStream = context.getContentResolver().openInputStream(photoUri);
+            if (inputStream != null) {
+                // Читаем и сжимаем изображение
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                inputStream.close();
+
+                // Сжимаем изображение
+                FileOutputStream outputStream = new FileOutputStream(photoFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream);
+                outputStream.close();
+
+                // Возвращаем путь к сохраненному файлу
+                return photoFile.getAbsolutePath();
+            }
         } catch (IOException e) {
             Log.e(TAG, "Error saving pet photo", e);
-            return null;
         }
+        return null;
     }
 
     public boolean canAddTrialPet() {
@@ -124,5 +174,31 @@ public class PetManager {
 
     public boolean canAddPet() {
         return pets.size() < 5;
+    }
+
+    public void addVaccine(Vaccine vaccine) {
+        Pet pet = getPetById(vaccine.getPetId());
+        if (pet != null) {
+            pet.addVaccine(vaccine);
+            savePets();
+        }
+    }
+
+    public void deleteVaccine(String vaccineId) {
+        for (Pet pet : pets) {
+            List<Vaccine> vaccines = pet.getVaccines();
+            for (int i = 0; i < vaccines.size(); i++) {
+                if (vaccines.get(i).getId().equals(vaccineId)) {
+                    vaccines.remove(i);
+                    savePets();
+                    return;
+                }
+            }
+        }
+    }
+
+    public List<Vaccine> getVaccinesForPet(String petId) {
+        Pet pet = getPetById(petId);
+        return pet != null ? pet.getVaccines() : new ArrayList<>();
     }
 } 

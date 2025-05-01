@@ -1,32 +1,72 @@
 package com.example.exam_petpal;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
-
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.example.exam_petpal.models.Pet;
+import com.bumptech.glide.Glide;
 import com.example.exam_petpal.data.PetManager;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.example.exam_petpal.models.Pet;
+import com.google.android.material.textfield.TextInputLayout;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.text.SimpleDateFormat;
 
 public class AddPetActivity extends AppCompatActivity {
     private EditText nameInput;
-    private EditText typeInput;
-    private EditText breedInput;
+    private Spinner typeInput;
+    private Spinner breedInput;
     private EditText birthDateInput;
     private EditText weightInput;
-    private EditText genderInput;
+    private Spinner genderInput;
     private Button saveButton;
+    private ImageView petPhoto;
     private PetManager petManager;
-    private SimpleDateFormat dateFormat;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private Calendar calendar = Calendar.getInstance();
+    private Uri selectedPhotoUri;
+
+    private final String[] petTypes = {"Собака", "Кошка", "Птица", "Грызун", "Рыбка", "Другое"};
+    private final String[][] petBreeds = {
+        {"Лабрадор", "Немецкая овчарка", "Хаски", "Дворняжка", "Другое"}, // Породы собак
+        {"Сиамская", "Персидская", "Мейн-кун", "Сфинкс", "Дворовая", "Другое"}, // Породы кошек
+        {"Волнистый попугай", "Канарейка", "Ара", "Другое"}, // Виды птиц
+        {"Хомяк", "Морская свинка", "Кролик", "Другое"}, // Виды грызунов
+        {"Золотая рыбка", "Гуппи", "Скалярия", "Другое"}, // Виды рыб
+        {"Другое"} // Другое
+    };
+    private final String[] genders = {"Мальчик", "Девочка"};
+
+    private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        result -> {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                selectedPhotoUri = result.getData().getData();
+                Glide.with(this)
+                    .load(selectedPhotoUri)
+                    .placeholder(R.drawable.default_pet)
+                    .error(R.drawable.default_pet)
+                    .centerCrop()
+                    .into(petPhoto);
+            }
+        }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,45 +76,129 @@ public class AddPetActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.add_pet);
+        getSupportActionBar().setTitle("Добавить питомца");
 
         petManager = PetManager.getInstance(this);
-        dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
         initializeViews();
-        setupListeners();
+        setupTypeSpinner();
+        setupGenderSpinner();
+        setupDatePicker();
+        setupSaveButton();
     }
 
     private void initializeViews() {
-        nameInput = findViewById(R.id.nameInput);
-        typeInput = findViewById(R.id.typeInput);
-        breedInput = findViewById(R.id.breedInput);
-        birthDateInput = findViewById(R.id.birthDateInput);
-        weightInput = findViewById(R.id.weightInput);
-        genderInput = findViewById(R.id.genderInput);
+        nameInput = findViewById(R.id.petNameInput);
+        typeInput = findViewById(R.id.petTypeSpinner);
+        breedInput = findViewById(R.id.petBreedSpinner);
+        birthDateInput = findViewById(R.id.petBirthDateInput);
+        weightInput = findViewById(R.id.petWeightInput);
+        genderInput = findViewById(R.id.petGenderInput);
         saveButton = findViewById(R.id.saveButton);
+        petPhoto = findViewById(R.id.petPhoto);
+
+        // Добавляем анимацию появления
+        View rootView = findViewById(R.id.rootLayout);
+        rootView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+
+        // Обработка нажатия на фото
+        petPhoto.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickImage.launch(intent);
+        });
     }
 
-    private void setupListeners() {
-        saveButton.setOnClickListener(v -> savePet());
+    private void setupTypeSpinner() {
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this, 
+            android.R.layout.simple_spinner_item, petTypes);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeInput.setAdapter(typeAdapter);
+
+        typeInput.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
+                updateBreedSpinner(position);
+            }
+
+            @Override
+            public void onNothingSelected(android.widget.AdapterView<?> parent) {
+            }
+        });
+    }
+
+    private void setupGenderSpinner() {
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this,
+            android.R.layout.simple_spinner_item, genders);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        genderInput.setAdapter(genderAdapter);
+    }
+
+    private void updateBreedSpinner(int typePosition) {
+        ArrayAdapter<String> breedAdapter = new ArrayAdapter<>(this,
+            android.R.layout.simple_spinner_item, petBreeds[typePosition]);
+        breedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        breedInput.setAdapter(breedAdapter);
+    }
+
+    private void setupDatePicker() {
+        birthDateInput.setOnClickListener(v -> showDatePicker());
+    }
+
+    private void showDatePicker() {
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            birthDateInput.setText(dateFormat.format(calendar.getTime()));
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void setupSaveButton() {
+        saveButton.setOnClickListener(v -> {
+            if (validateInputs()) {
+                savePet();
+            }
+        });
+    }
+
+    private boolean validateInputs() {
+        boolean isValid = true;
+
+        if (TextUtils.isEmpty(nameInput.getText())) {
+            ((TextInputLayout) nameInput.getParent()).setError("Введите имя питомца");
+            isValid = false;
+        } else {
+            ((TextInputLayout) nameInput.getParent()).setError(null);
+        }
+
+        if (typeInput.getSelectedItem() == null) {
+            isValid = false;
+        }
+
+        if (TextUtils.isEmpty(birthDateInput.getText())) {
+            ((TextInputLayout) birthDateInput.getParent()).setError("Выберите дату рождения");
+            isValid = false;
+        } else {
+            ((TextInputLayout) birthDateInput.getParent()).setError(null);
+        }
+
+        return isValid;
     }
 
     private void savePet() {
-        String name = nameInput.getText().toString().trim();
-        String type = typeInput.getText().toString().trim();
-        String breed = breedInput.getText().toString().trim();
-        String birthDateStr = birthDateInput.getText().toString().trim();
-        String weightStr = weightInput.getText().toString().trim();
-        String gender = genderInput.getText().toString().trim();
-
-        if (name.isEmpty() || type.isEmpty() || breed.isEmpty() || birthDateStr.isEmpty() || weightStr.isEmpty() || gender.isEmpty()) {
-            Toast.makeText(this, R.string.fill_all_fields, Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         try {
-            Date birthDate = dateFormat.parse(birthDateStr);
-            double weight = Double.parseDouble(weightStr);
+            String name = nameInput.getText().toString().trim();
+            String type = typeInput.getSelectedItem().toString();
+            String breed = breedInput.getSelectedItem().toString();
+            Date birthDate = dateFormat.parse(birthDateInput.getText().toString());
+            double weight = TextUtils.isEmpty(weightInput.getText()) ? 0.0 : 
+                Double.parseDouble(weightInput.getText().toString());
+            String gender = genderInput.getSelectedItem().toString();
+
+            String photoPath = null;
+            if (selectedPhotoUri != null) {
+                photoPath = petManager.savePetPhoto(this, selectedPhotoUri);
+            }
 
             Pet pet = new Pet();
             pet.setName(name);
@@ -83,21 +207,21 @@ public class AddPetActivity extends AppCompatActivity {
             pet.setBirthDate(birthDate);
             pet.setWeight(weight);
             pet.setGender(gender);
+            pet.setPhotoUri(photoPath);
 
             petManager.addPet(pet);
-            Toast.makeText(this, R.string.pet_added, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Питомец успешно добавлен", Toast.LENGTH_SHORT).show();
             finish();
-        } catch (ParseException e) {
-            Toast.makeText(this, R.string.invalid_date_format, Toast.LENGTH_SHORT).show();
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, R.string.invalid_weight_format, Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Ошибка при сохранении питомца", Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

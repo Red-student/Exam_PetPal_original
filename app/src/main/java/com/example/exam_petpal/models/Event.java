@@ -7,19 +7,38 @@ public class Event implements Serializable {
     private String id;
     private String petId;
     private String title;
-    private String description;
     private Date date;
-    private String type;
+    private String description;
+    private EventType type;
     private boolean repeatWeekly;
     private boolean repeatMonthly;
-    private boolean notificationEnabled;
-    private String notificationTime;
+
+    public enum EventType {
+        VACCINATION("Вакцинация"),
+        WALK("Прогулка"),
+        FEEDING("Кормление"),
+        MEDICATION("Прием лекарств"),
+        GROOMING("Груминг"),
+        OTHER("Другое");
+
+        private final String displayName;
+
+        EventType(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
+    }
 
     public Event() {
         this.id = String.valueOf(System.currentTimeMillis());
+        this.repeatWeekly = false;
+        this.repeatMonthly = false;
     }
 
-    public Event(String id, String petId, String title, String description, Date date, String type, boolean repeatWeekly, boolean repeatMonthly) {
+    public Event(String id, String petId, String title, String description, Date date, EventType type, boolean repeatWeekly, boolean repeatMonthly) {
         this.id = id;
         this.petId = petId;
         this.title = title;
@@ -28,7 +47,6 @@ public class Event implements Serializable {
         this.type = type;
         this.repeatWeekly = repeatWeekly;
         this.repeatMonthly = repeatMonthly;
-        this.notificationEnabled = false;
     }
 
     // Геттеры и сеттеры
@@ -56,6 +74,14 @@ public class Event implements Serializable {
         this.title = title;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -64,12 +90,12 @@ public class Event implements Serializable {
         this.description = description;
     }
 
-    public Date getDate() {
-        return date;
+    public EventType getType() {
+        return type;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     public boolean isRepeatWeekly() {
@@ -86,29 +112,5 @@ public class Event implements Serializable {
 
     public void setRepeatMonthly(boolean repeatMonthly) {
         this.repeatMonthly = repeatMonthly;
-    }
-
-    public boolean isNotificationEnabled() {
-        return notificationEnabled;
-    }
-
-    public void setNotificationEnabled(boolean notificationEnabled) {
-        this.notificationEnabled = notificationEnabled;
-    }
-
-    public String getNotificationTime() {
-        return notificationTime;
-    }
-
-    public void setNotificationTime(String notificationTime) {
-        this.notificationTime = notificationTime;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 } 

@@ -1,8 +1,11 @@
 package com.example.exam_petpal.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,8 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.exam_petpal.R;
+import com.example.exam_petpal.data.PetManager;
 import com.example.exam_petpal.models.Pet;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,25 +29,34 @@ import java.util.concurrent.TimeUnit;
 public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
 
     private List<Pet> pets;
+    private Context context;
     private OnPetClickListener listener;
+    private PetManager petManager;
     private boolean showArchived = false;
 
     public interface OnPetClickListener {
         void onPetClick(Pet pet);
+        void onEditClick(Pet pet);
+        void onDeleteClick(Pet pet);
+        void onAddVaccineClick(Pet pet);
     }
 
-    public PetAdapter(List<Pet> pets, OnPetClickListener listener) {
+    public PetAdapter(Context context, List<Pet> pets, OnPetClickListener listener) {
+        this.context = context;
         this.pets = pets;
         this.listener = listener;
+        this.petManager = PetManager.getInstance(context);
     }
 
-    public void setShowArchived(boolean showArchived) { this.showArchived = showArchived; }
+    public void setShowArchived(boolean showArchived) {
+        this.showArchived = showArchived;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
     public PetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-            .inflate(R.layout.item_pet, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_pet, parent, false);
         return new PetViewHolder(view);
     }
 
@@ -56,21 +71,6 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             holder.bind(pet);
-            holder.itemView.setOnClickListener(v -> {
-                listener.onPetClick(pet);
-            });
-            holder.itemView.setOnLongClickListener(v -> {
-                if (showArchived && pet.isHidden()) {
-                    pet.setHidden(false);
-                    notifyItemChanged(position);
-                    Toast.makeText(holder.itemView.getContext(), "Питомец восстановлен", Toast.LENGTH_SHORT).show();
-                } else if (!showArchived) {
-                    pet.setHidden(true);
-                    notifyItemChanged(position);
-                    Toast.makeText(holder.itemView.getContext(), "Питомец скрыт", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            });
         }
     }
 
@@ -85,29 +85,72 @@ public class PetAdapter extends RecyclerView.Adapter<PetAdapter.PetViewHolder> {
     }
 
     class PetViewHolder extends RecyclerView.ViewHolder {
-        private ImageView petImage;
+        private ImageView petPhoto;
         private TextView petName;
         private TextView petInfo;
-        private TextView petAge;
+        private ImageButton hideButton;
+        private MaterialButton editButton;
+        private MaterialButton deleteButton;
+        private MaterialButton addVaccineButton;
 
-        PetViewHolder(@NonNull View itemView) {
+        public PetViewHolder(@NonNull View itemView) {
             super(itemView);
-            petImage = itemView.findViewById(R.id.petImage);
+            petPhoto = itemView.findViewById(R.id.petPhoto);
             petName = itemView.findViewById(R.id.petName);
             petInfo = itemView.findViewById(R.id.petInfo);
-            petAge = itemView.findViewById(R.id.petAge);
+            hideButton = itemView.findViewById(R.id.hideButton);
+            editButton = itemView.findViewById(R.id.editButton);
+            deleteButton = itemView.findViewById(R.id.deleteButton);
+            addVaccineButton = itemView.findViewById(R.id.addVaccineButton);
         }
 
-        void bind(Pet pet) {
+        public void bind(Pet pet) {
             petName.setText(pet.getName());
-            petInfo.setText(String.format("%s, %s", pet.getType(), pet.getBreed()));
-            petAge.setText(calculateAge(pet.getBirthDate()));
+            petInfo.setText(String.format("%s • %s • %s", pet.getType(), pet.getBreed(), pet.getGender()));
 
             if (pet.getPhotoUri() != null) {
-                petImage.setImageURI(android.net.Uri.parse(pet.getPhotoUri()));
+                Glide.with(context)
+                    .load(pet.getPhotoUri())
+                    .placeholder(R.drawable.ic_paw)
+                    .error(R.drawable.ic_paw)
+                    .centerCrop()
+                    .into(petPhoto);
             } else {
-                petImage.setImageResource(R.drawable.ic_add_photo);
+                petPhoto.setImageResource(R.drawable.ic_paw);
             }
+
+            hideButton.setOnClickListener(v -> {
+                pet.setHidden(!pet.isHidden());
+                petManager.updatePet(pet);
+                Toast.makeText(context, 
+                    pet.isHidden() ? "Питомец скрыт" : "Питомец восстановлен", 
+                    Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
+            });
+
+            editButton.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onEditClick(pet);
+                }
+            });
+
+            deleteButton.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onDeleteClick(pet);
+                }
+            });
+
+            addVaccineButton.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onAddVaccineClick(pet);
+                }
+            });
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onPetClick(pet);
+                }
+            });
         }
 
         private String calculateAge(Date birthDate) {

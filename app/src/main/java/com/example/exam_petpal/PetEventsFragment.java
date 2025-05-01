@@ -127,7 +127,7 @@ public class PetEventsFragment extends Fragment {
                 matchesDate = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                         cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
             }
-            boolean matchesType = selectedType.equals("Все") || e.getType().equalsIgnoreCase(selectedType);
+            boolean matchesType = selectedType.equals("Все") || e.getType().getDisplayName().equals(selectedType);
             boolean matchesQuery = searchQuery.isEmpty() || e.getTitle().toLowerCase().contains(searchQuery.toLowerCase());
             if (matchesDate && matchesType && matchesQuery) {
                 filtered.add(e);
@@ -212,7 +212,16 @@ public class PetEventsFragment extends Fragment {
                 }
                 try {
                     Date date = sdf.parse(dateStr);
-                    Event event = new Event(String.valueOf(System.currentTimeMillis()), pet.getId(), title, desc, date, "custom", repeatWeekly, repeatMonthly);
+                    Event event = new Event(
+                        String.valueOf(System.currentTimeMillis()),
+                        pet.getId(),
+                        title,
+                        desc,
+                        date,
+                        Event.EventType.OTHER,
+                        repeatWeekly,
+                        repeatMonthly
+                    );
                     events.add(event);
                     saveEvents();
                     updateEventsList();
@@ -319,7 +328,7 @@ public class PetEventsFragment extends Fragment {
                 obj.put("title", e.getTitle());
                 obj.put("description", e.getDescription());
                 obj.put("date", e.getDate().getTime());
-                obj.put("type", e.getType());
+                obj.put("type", e.getType().name());
                 obj.put("repeatWeekly", e.isRepeatWeekly());
                 obj.put("repeatMonthly", e.isRepeatMonthly());
                 arr.put(obj);
@@ -341,11 +350,11 @@ public class PetEventsFragment extends Fragment {
                         obj.getString("id"),
                         obj.getString("petId"),
                         obj.getString("title"),
-                        obj.optString("description", ""),
+                        obj.getString("description"),
                         new Date(obj.getLong("date")),
-                        obj.optString("type", "custom"),
-                        obj.optBoolean("repeatWeekly", false),
-                        obj.optBoolean("repeatMonthly", false)
+                        Event.EventType.valueOf(obj.getString("type")),
+                        obj.getBoolean("repeatWeekly"),
+                        obj.getBoolean("repeatMonthly")
                     );
                     events.add(e);
                 }

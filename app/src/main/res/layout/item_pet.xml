@@ -5,9 +5,11 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
+    android:elevation="4dp"
     app:cardCornerRadius="16dp"
-    app:cardElevation="2dp"
-    app:strokeWidth="0dp">
+    app:cardElevation="4dp"
+    app:strokeColor="@color/accent_primary"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,31 +20,30 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/petImage"
+            <ImageView
+                android:id="@+id/petPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/default_pet" />
+                android:src="@drawable/ic_paw"
+                android:contentDescription="Фото питомца" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/gradient_overlay" />
+                android:layout_height="80dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/gradient_overlay"/>
 
-            <TextView
-                android:id="@+id/petName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|start"
-                android:layout_margin="16dp"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:shadowColor="#80000000"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2" />
+            <ImageButton
+                android:id="@+id/hideButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="8dp"
+                android:background="@drawable/circle_background"
+                android:src="@drawable/ic_hide"
+                android:contentDescription="Скрыть питомца"
+                app:tint="@color/accent_primary" />
 
         </FrameLayout>
 
@@ -52,63 +53,71 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <TextView
+                android:id="@+id/petName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/petInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:textColor="@color/text_secondary" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
+                android:layout_marginTop="16dp">
 
-                <TextView
-                    android:id="@+id/petInfo"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/editButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textColor="@color/text_secondary" />
+                    android:layout_marginEnd="4dp"
+                    android:text="Редактировать"
+                    android:textColor="@android:color/white"
+                    app:icon="@drawable/ic_edit"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    android:backgroundTint="@color/accent_primary"/>
 
-                <TextView
-                    android:id="@+id/petAge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceBody1"
-                    android:textColor="@color/accent_primary"
-                    android:textStyle="bold" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/deleteButton"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:text="Удалить"
+                    android:textColor="@android:color/white"
+                    app:icon="@drawable/ic_delete"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    android:backgroundTint="@color/error"/>
 
             </LinearLayout>
 
-            <com.google.android.material.chip.ChipGroup
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addVaccineButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/vaccinationChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Вакцинация"
-                    android:textSize="12sp"
-                    app:chipBackgroundColor="@color/chip_background"
-                    app:chipStrokeWidth="0dp" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/medicationChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Лекарства"
-                    android:textSize="12sp"
-                    app:chipBackgroundColor="@color/chip_background"
-                    app:chipStrokeWidth="0dp" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/eventsChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="События"
-                    android:textSize="12sp"
-                    app:chipBackgroundColor="@color/chip_background"
-                    app:chipStrokeWidth="0dp" />
-
-            </com.google.android.material.chip.ChipGroup>
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:text="Добавить вакцину"
+                android:textColor="@color/accent_primary"
+                app:icon="@drawable/ic_vaccine"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@color/accent_primary"
+                app:strokeColor="@color/accent_primary"/>
 
         </LinearLayout>
 
